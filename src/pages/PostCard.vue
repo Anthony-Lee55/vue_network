@@ -13,6 +13,10 @@ const user = computed(() => AppState.account)
 
 // const post = defineProps({ post: Post })
 
+function likePost() {
+  props.post.likes + 1
+}
+
 async function deletePost() {
   try {
     const confirm = await Pop.confirm("Do you really want to delete this post?")
@@ -35,7 +39,7 @@ async function deletePost() {
         <h1 class="text-dark fw-bold">{{ post.creator.name }}</h1>
         <h1 v-if="post.creator.graduated" class="text-dark fs-1"><i class="mdi mdi-school"></i></h1>
       </div>
-      <p class="text-dark">{{ post.createdAt }}</p>
+      <p class="text-dark ms-4">{{ post.createdAt.toLocaleDateString }}</p>
     </RouterLink>
     <div>
 
@@ -48,8 +52,8 @@ async function deletePost() {
     </div>
     <div class="pe-3 fs-2 d-flex justify-content-between p-2">
       <span>
-        <i class="mdi mdi-heart-outline mdi-fill text-info"></i>
-        {{ post.likes.length }}
+        <i @click="likePost()" class="mdi mdi-heart-outline mdi-fill text-info"></i>
+        {{ post.likes.length + 1 }}
       </span>
       <button @click="deletePost()" v-if="post.creatorId == user?.id" type="button" class="btn btn-info"><i
           class="mdi mdi-delete text-light"></i></button>
