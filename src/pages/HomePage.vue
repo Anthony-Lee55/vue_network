@@ -1,37 +1,45 @@
 <script setup>
+import { AppState } from '@/AppState';
+import PageChange from '@/components/PageChange.vue';
+import PostCard from '@/pages/PostCard.vue';
+import { postsService } from '@/services/PostsService';
+import { logger } from '@/utils/Logger';
+import Pop from '@/utils/Pop';
+import { computed, onMounted } from 'vue';
 
+const posts = computed(() => AppState.posts)
+
+const currentPage = computed(() => AppState.currentPage)
+const totalPages = computed(() => AppState.totalPages)
+
+onMounted(() => {
+  getAllPosts()
+})
+
+async function getAllPosts() {
+  try {
+    await postsService.getAllPosts()
+  }
+  catch (error) {
+    Pop.error(error);
+    logger.log('getting all posts', error)
+  }
+}
 </script>
 
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 card align-items-center shadow rounded elevation-3">
-      <img src="@/assets/img/cw-circle-logo.png" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
-    </div>
+  <div class="container-fluid">
+    <section class="row d-flex justify-content-center mb-3">
+      <div class="col-md-10">
+        <div>
+          <div v-for="post in posts" :key="post.id">
+            <PostCard :post="post" />
+          </div>
+        </div>
+      </div>
+      <PageChange />
+    </section>
   </div>
 </template>
 
-<style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
-
-  .home-card {
-    width: clamp(500px, 50vw, 100%);
-
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
-  }
-}
-</style>
+<style scoped lang="scss"></style>
