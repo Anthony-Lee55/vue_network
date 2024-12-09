@@ -5,7 +5,7 @@ import Pop from '@/utils/Pop';
 import { ref } from 'vue';
 
 
-const searchTerm = ref('')
+const searchTerm = ref('rat')
 
 async function searchPosts() {
   try {
@@ -13,7 +13,7 @@ async function searchPosts() {
   }
   catch (error) {
     Pop.error(error);
-    logger.log('searching posts', error)
+    logger.log(`Could not complete search for ${searchTerm.value}`, error)
   }
 
 }

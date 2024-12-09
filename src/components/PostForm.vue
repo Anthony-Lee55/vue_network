@@ -5,16 +5,15 @@ import Pop from '@/utils/Pop';
 import { ref } from 'vue';
 
 
-
 const postData = ref({
   body: '',
-  postImg: ''
+  imgUrl: ''
 })
 
 function resetForm() {
   postData.value = {
     body: '',
-    postImg: ''
+    imgUrl: ''
   }
 }
 
@@ -43,8 +42,7 @@ async function createPost() {
       </div>
       <div class="col-md-12 pb-3">
         <label for="post-img">Img</label>
-        <input v-model="postData.postImg" type="text" maxlength="500" name="post-img" id="post-img"
-          class="form-control">
+        <input v-model="postData.imgUrl" type="text" maxlength="500" name="post-img" id="post-img" class="form-control">
       </div>
       <div class="text-end">
         <button @click="resetForm()" class="btn btn-info m-2"><i class="mdi mdi-restore text-light"

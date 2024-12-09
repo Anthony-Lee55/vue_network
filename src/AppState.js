@@ -18,7 +18,7 @@ export const AppState = reactive({
   profilePosts: [],
 
   currentPage: 1,
-  totalPages: 44,
+  totalPages: Infinity,
   likes: []
 })
 

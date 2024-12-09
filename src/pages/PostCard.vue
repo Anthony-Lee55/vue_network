@@ -13,8 +13,16 @@ const user = computed(() => AppState.account)
 
 // const post = defineProps({ post: Post })
 
-function likePost() {
-  props.post.likes + 1
+async function likePost() {
+  // FIXME pass the id of the post that we want to like to the service (reference your delete)
+  // FIXME format your request URL as 'api/posts/:postId/like', and send a POST request to that URL
+  try {
+    await postsService.likePost(props.post.likeIds)
+  }
+  catch (error) {
+    Pop.error(error);
+    logger.log('liking post', error)
+  }
 }
 
 async function deletePost() {
@@ -25,7 +33,7 @@ async function deletePost() {
   }
   catch (error) {
     Pop.error(error);
-    logger.log('deleting car', error)
+    logger.log('deleting post', error)
   }
 }
 </script>
@@ -39,7 +47,7 @@ async function deletePost() {
         <h1 class="text-dark fw-bold">{{ post.creator.name }}</h1>
         <h1 v-if="post.creator.graduated" class="text-dark fs-1"><i class="mdi mdi-school"></i></h1>
       </div>
-      <p class="text-dark ms-4">{{ post.createdAt.toLocaleDateString }}</p>
+      <p class="text-dark ms-4">{{ post.createdAt.toLocaleDateString() }}</p>
     </RouterLink>
     <div>
 
@@ -53,7 +61,7 @@ async function deletePost() {
     <div class="pe-3 fs-2 d-flex justify-content-between p-2">
       <span>
         <i @click="likePost()" class="mdi mdi-heart-outline mdi-fill text-info"></i>
-        {{ post.likes.length + 1 }}
+        {{ post.likes.length }}
       </span>
       <button @click="deletePost()" v-if="post.creatorId == user?.id" type="button" class="btn btn-info"><i
           class="mdi mdi-delete text-light"></i></button>

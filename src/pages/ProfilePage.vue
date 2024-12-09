@@ -8,6 +8,7 @@ import { useRoute } from 'vue-router';
 import PostCard from './PostCard.vue';
 import { postsService } from '@/services/PostsService';
 import PostForm from '@/components/PostForm.vue';
+import PageChange from '@/components/PageChange.vue';
 
 const route = useRoute()
 
@@ -77,9 +78,6 @@ async function getPostsByProfileId() {
           <p>{{ profile.class }}</p>
           <h1 class="fw-bold">{{ profile.name }}</h1>
           <p>{{ profile.bio }}</p>
-          <span class="text-end p-2">
-            <button class="d-flex btn btn-outline-info justify-content-end">Edit</button>
-          </span>
         </div>
       </div>
     </section>
@@ -90,6 +88,8 @@ async function getPostsByProfileId() {
         <PostCard :post="post" />
       </div>
     </section>
+    <PageChange />
+    <!-- FIXME add in page navigation logic here -->
   </div>
 </template>
 
