@@ -5,7 +5,7 @@ import Pop from '@/utils/Pop';
 import { ref } from 'vue';
 
 
-const searchTerm = ref('rat')
+const searchTerm = ref('')
 
 async function searchPosts() {
   try {
